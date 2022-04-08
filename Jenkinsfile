@@ -45,14 +45,14 @@ pipeline {
     }
 
 
-  stage('Static Code Analysis') {
-      steps{
-        echo '------------>Análisis de código estático<------------'
-		withSonarQubeEnv('Sonar') {
-	sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
-            }
-          }
-        }
+     stage('Static Code Analysis') {
+       steps{
+         echo '------------>Análisis de código estático<------------'
+ 		sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:ventacomponentes.john.ramirez',
+         sonarName:'''"CeibaADN-VentaComponentes(john.ramirez)"''',
+         sonarPathProperties:'./sonar-project.properties')
+       }
+     }
 
 
  stage('Build') {
