@@ -1,5 +1,5 @@
 # Información del proyecto
-sonar.projectKey=co.com.ceiba.adn:ceibaventacomponentes.john.ramirez
+sonar.projectKey=co.com.ceiba.adn:ventacomponentes.john.ramirez
 sonar.projectName=CeibaADN-VentaComponentes(john.ramirez)
 
 sonar.modules=dominio,infraestructura
