@@ -23,6 +23,13 @@ public class RepositorioArticuloMysql implements RepositorioArticulo {
     @SqlStatement(namespace="articulo", value="eliminar")
     private static String sqlEliminarArticulo;
 
+    @SqlStatement(namespace="articulo", value="existePorId")
+    private static String sqlExistePorId;
+
+    @SqlStatement(namespace="articulo", value="existe")
+    private static String sqlExistePorNombre;
+
+
     @Override
     public Long crear(Articulo articulo) {
         return this.customNamedParameterJdbcTemplate.crear(articulo, sqlCrearArticulo);
@@ -39,5 +46,21 @@ public class RepositorioArticuloMysql implements RepositorioArticulo {
         paramSource.addValue("id_articulo", id);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlEliminarArticulo, paramSource);
+    }
+
+    @Override
+    public boolean existe(String nombreArticulo) {
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue("nombre", nombreArticulo);
+
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistePorNombre,paramSource, Boolean.class);
+    }
+
+    @Override
+    public boolean existePorId(Long idArticulo) {
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue("id", idArticulo);
+
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistePorId,paramSource, Boolean.class);
     }
 }

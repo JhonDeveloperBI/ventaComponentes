@@ -33,18 +33,18 @@ public class BeanServicio {
 
     //artículos
     @Bean
-    public ServicioCrearArticulo servicioCrearArticulo(RepositorioArticulo repositorioArticulo, DaoArticulo daoArticulo){
-        return new ServicioCrearArticulo(repositorioArticulo,daoArticulo);
+    public ServicioCrearArticulo servicioCrearArticulo(RepositorioArticulo repositorioArticulo){
+        return new ServicioCrearArticulo(repositorioArticulo);
     }
 
     @Bean
-    public ServicioEliminarArticulo servicioEliminarArticulo(RepositorioArticulo repositorioArticulo, DaoArticulo daoArticulo){
-        return new ServicioEliminarArticulo(repositorioArticulo,daoArticulo);
+    public ServicioEliminarArticulo servicioEliminarArticulo(RepositorioArticulo repositorioArticulo){
+        return new ServicioEliminarArticulo(repositorioArticulo);
     }
 
     @Bean
-    public ServicioActualizarArticulo servicioActualizarArticulo(RepositorioArticulo repositorioArticulo, DaoArticulo daoArticulo){
-        return new ServicioActualizarArticulo(repositorioArticulo,daoArticulo);
+    public ServicioActualizarArticulo servicioActualizarArticulo(RepositorioArticulo repositorioArticulo){
+        return new ServicioActualizarArticulo(repositorioArticulo);
     }
 
     //ventas

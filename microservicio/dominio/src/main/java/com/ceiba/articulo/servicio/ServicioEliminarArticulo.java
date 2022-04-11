@@ -9,12 +9,9 @@ public class ServicioEliminarArticulo {
     private static final String EL_ARTICULO_NO_EXISTE_EN_EL_SISTEMA = "El artículo no existe en el sistema";
 
     private final RepositorioArticulo repositorioArticulo;
-    private final DaoArticulo daoArticulo;
 
-
-    public ServicioEliminarArticulo(RepositorioArticulo repositorioArticulo, DaoArticulo daoArticulo) {
+    public ServicioEliminarArticulo(RepositorioArticulo repositorioArticulo) {
         this.repositorioArticulo = repositorioArticulo;
-        this.daoArticulo = daoArticulo;
     }
 
     public Integer ejecutar(Long id) {
@@ -24,7 +21,7 @@ public class ServicioEliminarArticulo {
 
 
     public void validarExistenciaPrevia(Long id) {
-        boolean existe = this.daoArticulo.existePorId(id);
+        boolean existe = this.repositorioArticulo.existePorId(id);
         if(!existe) {
             throw new ExcepcionSinDatos(EL_ARTICULO_NO_EXISTE_EN_EL_SISTEMA);
         }

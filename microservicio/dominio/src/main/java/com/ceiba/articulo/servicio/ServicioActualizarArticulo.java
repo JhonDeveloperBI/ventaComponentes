@@ -10,11 +10,10 @@ public class ServicioActualizarArticulo {
     private static final String EL_ARTICULO_NO_EXISTE_EN_EL_SISTEMA = "El artículo no existe en el sistema";
 
     private final RepositorioArticulo repositorioArticulo;
-    private final DaoArticulo daoArticulo;
 
-    public ServicioActualizarArticulo(RepositorioArticulo repositorioArticulo, DaoArticulo daoArticulo) {
+
+    public ServicioActualizarArticulo(RepositorioArticulo repositorioArticulo) {
         this.repositorioArticulo = repositorioArticulo;
-        this.daoArticulo = daoArticulo;
     }
 
     public void ejecutar(Articulo articulo) {
@@ -23,7 +22,7 @@ public class ServicioActualizarArticulo {
     }
 
     private void validarExistenciaPrevia(Articulo articulo) {
-        boolean existe = this.daoArticulo.existePorId(articulo.getIdArticulo());
+        boolean existe = this.repositorioArticulo.existePorId(articulo.getIdArticulo());
         if(!existe) {
             throw new ExcepcionDuplicidad(EL_ARTICULO_NO_EXISTE_EN_EL_SISTEMA);
         }
