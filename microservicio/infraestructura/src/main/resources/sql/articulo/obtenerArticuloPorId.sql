@@ -1,0 +1,1 @@
+select id, nombre, unidades, precio from articulo where id_articulo = :id

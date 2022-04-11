@@ -1,0 +1,1 @@
+select count(1) from articulo where id_articulo = :id
