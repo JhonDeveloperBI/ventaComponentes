@@ -66,7 +66,7 @@ public class DaoArticuloMysql implements DaoArticulo {
     @Override
     public Articulo obtenerArticuloPorId(Long idArticulo) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("id", idArticulo);
+        paramSource.addValue("id_articulo", idArticulo);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerArticuloPorId,paramSource, new com.ceiba.articulo.adaptador.repositorio.MapeoArticulo());
     }
