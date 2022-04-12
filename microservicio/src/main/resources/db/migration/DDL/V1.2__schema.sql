@@ -15,7 +15,5 @@ precio_unidad FLOAT NOT NULL,
 total_venta FLOAT NOT NULL,
 detalle_venta_articulo VARCHAR(50) NOT NULL,
 fecha_venta DATETIME DEFAULT current_timestamp,
-primary key(id),
-foreign key(id_articulo) references articulo(id),
-foreign key(id_usuario) references usuario(id)
+primary key(id)
 );
