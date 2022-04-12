@@ -1,9 +1,11 @@
 package com.ceiba.configuracion;
 
+import com.ceiba.articulo.puerto.dao.DaoArticulo;
 import com.ceiba.articulo.puerto.repositorio.RepositorioArticulo;
 import com.ceiba.articulo.servicio.ServicioActualizarArticulo;
 import com.ceiba.articulo.servicio.ServicioCrearArticulo;
 import com.ceiba.articulo.servicio.ServicioEliminarArticulo;
+import com.ceiba.usuario.puerto.dao.DaoUsuario;
 import com.ceiba.usuario.puerto.repositorio.RepositorioUsuario;
 import com.ceiba.usuario.servicio.ServicioActualizarUsuario;
 import com.ceiba.usuario.servicio.ServicioCrearUsuario;
@@ -49,8 +51,8 @@ public class BeanServicio {
 
     //ventas
     @Bean
-    public ServicioCrearVenta servicioCrearVenta(RepositorioVenta repositorioVenta){
-        return new ServicioCrearVenta(repositorioVenta);
+    public ServicioCrearVenta servicioCrearVenta(RepositorioVenta repositorioVenta, ServicioActualizarArticulo servicioActualizarArticulo, DaoArticulo daoArticulo, DaoUsuario daoUsuario){
+        return new ServicioCrearVenta(repositorioVenta, servicioActualizarArticulo, daoArticulo, daoUsuario);
     }
 
 
