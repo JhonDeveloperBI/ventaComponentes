@@ -15,7 +15,7 @@ public class ManejadorEliminarArticulo implements ManejadorComandoRespuesta<Long
     }
 
     public ComandoRespuesta<Long> ejecutar(Long idArticulo) {
-        return new ComandoRespuesta<Long>(this.servicioEliminarArticulo.ejecutar(idArticulo).longValue());
+        return new ComandoRespuesta<>(this.servicioEliminarArticulo.ejecutar(idArticulo).longValue());
     }
 
 }

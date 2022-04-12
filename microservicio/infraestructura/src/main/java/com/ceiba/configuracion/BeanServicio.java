@@ -1,6 +1,5 @@
 package com.ceiba.configuracion;
 
-import com.ceiba.articulo.puerto.dao.DaoArticulo;
 import com.ceiba.articulo.puerto.repositorio.RepositorioArticulo;
 import com.ceiba.articulo.servicio.ServicioActualizarArticulo;
 import com.ceiba.articulo.servicio.ServicioCrearArticulo;
