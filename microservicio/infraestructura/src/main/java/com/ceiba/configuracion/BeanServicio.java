@@ -9,6 +9,7 @@ import com.ceiba.usuario.puerto.repositorio.RepositorioUsuario;
 import com.ceiba.usuario.servicio.ServicioActualizarUsuario;
 import com.ceiba.usuario.servicio.ServicioCrearUsuario;
 import com.ceiba.usuario.servicio.ServicioEliminarUsuario;
+import com.ceiba.venta.puerto.repositorio.RepositorioVenta;
 import com.ceiba.venta.servicio.ServicioCrearVenta;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,8 +50,8 @@ public class BeanServicio {
 
     //ventas
     @Bean
-    public ServicioCrearVenta servicioCrearVenta(RepositorioArticulo repositorioArticulo, DaoArticulo daoArticulo){
-        return new ServicioCrearVenta(repositorioArticulo,daoArticulo);
+    public ServicioCrearVenta servicioCrearVenta(RepositorioVenta repositorioVenta){
+        return new ServicioCrearVenta(repositorioVenta);
     }
 
 

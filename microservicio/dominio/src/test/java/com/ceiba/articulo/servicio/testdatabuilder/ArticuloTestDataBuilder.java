@@ -15,7 +15,7 @@ public class ArticuloTestDataBuilder {
         precio = 1000F;
     }
 
-    public  ArticuloTestDataBuilder conId(Long idArticulo){
+    public ArticuloTestDataBuilder conId(Long idArticulo){
         this.idArticulo = idArticulo;
         return this;
     }

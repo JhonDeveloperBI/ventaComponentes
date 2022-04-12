@@ -1,13 +1,18 @@
-package com.ceiba.venta.modelo.dto;
+package com.ceiba.venta;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @AllArgsConstructor
-public class DtoVenta {
+@NoArgsConstructor
+public class ComandoVenta {
+
     private Long id;
     private Long idArticulo;
     private Long idUsuario;

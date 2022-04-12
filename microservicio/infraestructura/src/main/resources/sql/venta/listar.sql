@@ -1,2 +1,2 @@
-select id_venta, id_articulo, id_usuario, unidad_Venta, precio_Unidad, precio_Venta, detalle_venta, fecha_Venta
+select id, id_articulo, id_usuario, unidad_venta, precio_unidad, total_venta, detalle_venta_articulo, fecha_venta
 from venta
