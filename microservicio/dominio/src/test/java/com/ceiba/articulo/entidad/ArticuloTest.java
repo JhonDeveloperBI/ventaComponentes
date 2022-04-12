@@ -18,7 +18,7 @@ public class ArticuloTest {
         //act
         Articulo articulo = new ArticuloTestDataBuilder().conId(1L).conNombreArticulo("diodo led").conUnidades(10L).conPrecio(150F).build();
         //assert
-        assertEquals(1, articulo.getIdArticulo());
+        assertEquals(1, articulo.getId());
         assertEquals("diodo led", articulo.getNombreArticulo());
         assertEquals(10L, articulo.getUnidades());
         assertEquals(150F, articulo.getPrecio());
