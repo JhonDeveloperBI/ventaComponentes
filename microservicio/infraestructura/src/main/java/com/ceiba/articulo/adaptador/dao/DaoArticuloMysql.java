@@ -50,7 +50,7 @@ public class DaoArticuloMysql implements DaoArticulo {
     @Override
     public boolean existePorId(Long id) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("id_articulo", id);
+        paramSource.addValue("id", id);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistePorId,paramSource, Boolean.class);
     }
@@ -58,7 +58,7 @@ public class DaoArticuloMysql implements DaoArticulo {
     @Override
     public float obtenerPrecioArticuloPorId(Long idArticulo) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("id_articulo", idArticulo);
+        paramSource.addValue("id", idArticulo);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerPrecioArticuloPorId,paramSource, Float.class);
     }
@@ -66,7 +66,7 @@ public class DaoArticuloMysql implements DaoArticulo {
     @Override
     public Articulo obtenerArticuloPorId(Long idArticulo) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("id_articulo", idArticulo);
+        paramSource.addValue("id", idArticulo);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlObtenerArticuloPorId,paramSource, new com.ceiba.articulo.adaptador.repositorio.MapeoArticulo());
     }

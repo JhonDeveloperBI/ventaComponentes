@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ComandoArticulo {
 
-    private Long idArticulo;
+    private Long id;
     private String nombreArticulo;
     private Long unidades;
     private Float precio;

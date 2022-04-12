@@ -9,7 +9,7 @@ public class FabricaArticulo {
 
     public Articulo crear(ComandoArticulo comandoArticulo) {
         return new Articulo(
-                comandoArticulo.getIdArticulo(),
+                comandoArticulo.getId(),
                 comandoArticulo.getNombreArticulo(),
                 comandoArticulo.getUnidades(),
                 comandoArticulo.getPrecio()

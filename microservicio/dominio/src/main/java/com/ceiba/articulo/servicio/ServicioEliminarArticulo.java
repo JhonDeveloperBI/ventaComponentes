@@ -1,6 +1,5 @@
 package com.ceiba.articulo.servicio;
 
-import com.ceiba.articulo.puerto.dao.DaoArticulo;
 import com.ceiba.articulo.puerto.repositorio.RepositorioArticulo;
 import com.ceiba.dominio.excepcion.ExcepcionSinDatos;
 

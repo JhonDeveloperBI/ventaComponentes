@@ -12,7 +12,7 @@ public class MapeoArticulo implements RowMapper<DtoArticulo>, MapperResult {
     @Override
     public DtoArticulo mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 
-        Long idArticulo = resultSet.getLong("id_Articulo");
+        Long idArticulo = resultSet.getLong("id");
         String nombreArticulo = resultSet.getString("nombre");
         Long unidades = resultSet.getLong("unidades");
         Float precio = resultSet.getFloat( "precio");

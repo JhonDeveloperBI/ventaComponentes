@@ -1,0 +1,1 @@
+insert into articulo(id, nombre, unidades, precio) values(1, 'test', 10, 50.000)

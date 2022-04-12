@@ -33,9 +33,9 @@ public class ComandoControladorArticulo {
     }
 
     @PutMapping(value="/{id}")
-    @ApiOperation("Actualizar artículo")
-    public void actualizar(@RequestBody ComandoArticulo comandoArticulo,@PathVariable Long idArticulo) {
-        comandoArticulo.setIdArticulo(idArticulo);
+    @ApiOperation("Actualizar articulo")
+    public void actualizar(@RequestBody ComandoArticulo comandoArticulo,@PathVariable Long id) {
+        comandoArticulo.setId(id);
         manejadorActualizarArticulo.ejecutar(comandoArticulo);
     }
 

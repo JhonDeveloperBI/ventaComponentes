@@ -1,12 +1,14 @@
 package com.ceiba.articulo.comando.manejador;
 
 import com.ceiba.ComandoRespuesta;
-import com.ceiba.articulo.ComandoArticulo;
-import com.ceiba.articulo.comando.fabrica.FabricaArticulo;
+
 import com.ceiba.articulo.modelo.entidad.Articulo;
 import com.ceiba.articulo.servicio.ServicioCrearArticulo;
 import com.ceiba.manejador.ManejadorComandoRespuesta;
 import org.springframework.stereotype.Component;
+
+import com.ceiba.articulo.ComandoArticulo;
+import com.ceiba.articulo.comando.fabrica.FabricaArticulo;
 
 @Component
 public class ManejadorCrearArticulo implements ManejadorComandoRespuesta<ComandoArticulo, ComandoRespuesta<Long>> {

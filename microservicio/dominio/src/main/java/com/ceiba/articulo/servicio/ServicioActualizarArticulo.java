@@ -22,7 +22,7 @@ public class ServicioActualizarArticulo {
     }
 
     private void validarExistenciaPrevia(Articulo articulo) {
-        boolean existe = this.repositorioArticulo.existePorId(articulo.getIdArticulo());
+        boolean existe = this.repositorioArticulo.existePorId(articulo.getId());
         if(!existe) {
             throw new ExcepcionDuplicidad(EL_ARTICULO_NO_EXISTE_EN_EL_SISTEMA);
         }

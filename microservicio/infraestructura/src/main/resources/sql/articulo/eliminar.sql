@@ -1,3 +1,3 @@
 delete
 from articulo
-where id_articulo = :id
+where id = :id

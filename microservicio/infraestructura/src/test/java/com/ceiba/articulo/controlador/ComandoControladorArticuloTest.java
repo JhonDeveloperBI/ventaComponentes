@@ -3,8 +3,6 @@ package com.ceiba.articulo.controlador;
 import com.ceiba.ApplicationMock;
 import com.ceiba.articulo.ComandoArticulo;
 import com.ceiba.articulo.servicio.testdatabuilder.ComandoArticuloTestDataBuilder;
-import com.ceiba.usuario.comando.ComandoUsuario;
-import com.ceiba.usuario.servicio.testdatabuilder.ComandoUsuarioTestDataBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,7 +60,7 @@ public class ComandoControladorArticuloTest {
 
     @Test
     @DisplayName("Deberia eliminar un articulo")
-    void deberiaEliminarUnUsuario() throws Exception {
+    void deberiaEliminarUnArticulo() throws Exception {
         // arrange
         Long id = 1L;
         // act - assert

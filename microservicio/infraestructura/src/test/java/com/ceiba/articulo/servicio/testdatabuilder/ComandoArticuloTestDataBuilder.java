@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class ComandoArticuloTestDataBuilder {
 
-    private Long idArticulo;
+    private Long id;
     private String nombreArticulo;
     private Long unidades;
     private Float precio;
@@ -23,6 +23,6 @@ public class ComandoArticuloTestDataBuilder {
     }
 
     public ComandoArticulo build(){
-        return new ComandoArticulo(idArticulo,nombreArticulo,unidades,precio);
+        return new ComandoArticulo(id,nombreArticulo,unidades,precio);
     }
 }

@@ -6,7 +6,7 @@ public interface RepositorioArticulo {
 
     /**
      * Permite crear un Articulo
-     * @param Articulo
+     * @param articulo
      * @return el id generado
      */
     Long crear(Articulo articulo);

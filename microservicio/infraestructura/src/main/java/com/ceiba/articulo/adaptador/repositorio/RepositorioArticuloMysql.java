@@ -5,7 +5,9 @@ import com.ceiba.articulo.puerto.repositorio.RepositorioArticulo;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RepositorioArticuloMysql implements RepositorioArticulo {
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
@@ -43,7 +45,7 @@ public class RepositorioArticuloMysql implements RepositorioArticulo {
     @Override
     public Integer eliminar(Long id) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("id_articulo", id);
+        paramSource.addValue("id", id);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlEliminarArticulo, paramSource);
     }

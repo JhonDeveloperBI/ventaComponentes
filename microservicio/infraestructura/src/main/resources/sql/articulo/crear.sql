@@ -1,2 +1,1 @@
-insert into articulo (nombre, unidades,  precio)
-values (:nombre,  :unidades,  :precio)
+insert into articulo (nombre, unidades,  precio) values (:nombreArticulo,  :unidades,  :precio)

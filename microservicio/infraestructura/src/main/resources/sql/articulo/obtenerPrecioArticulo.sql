@@ -1,1 +1,0 @@
-select precio from articulo where id_articulo = :id
