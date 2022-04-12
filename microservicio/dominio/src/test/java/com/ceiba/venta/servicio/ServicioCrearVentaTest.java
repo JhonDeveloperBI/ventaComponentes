@@ -100,9 +100,29 @@ public class ServicioCrearVentaTest {
 
         // act - assert
 
-        assertEquals(servicioCrearVenta.validarDiasOferta(fecha), true);
-        assertEquals(servicioCrearVenta.validarDiasOferta(fechaSabado), false);
-        assertEquals(servicioCrearVenta.validarDiasOferta(fechaDomingo), false);
+        assertEquals(servicioCrearVenta.validarDiasEntreSemana(fecha), true);
+        assertEquals(servicioCrearVenta.validarDiasEntreSemana(fechaSabado), false);
+        assertEquals(servicioCrearVenta.validarDiasEntreSemana(fechaDomingo), false);
+    }
+
+    @Test
+    @DisplayName("Deberia retornar un valor con el descuento del fin de semana")
+    void deberiaRetornarUnValorConElDescuentoDelFinDeSemana() {
+        //arrange
+        ServicioCrearVenta servicioCrearVenta =  spy(new ServicioCrearVenta(repositorioVenta,  servicioActualizarArticulo, daoArticulo, daoUsuario));
+        Long unidadVenta = 10L;
+        Float precioArticulo = 1000F;
+        Boolean DiaEntreSemanaInvalido = false;
+        Boolean DiaEntreSemanaValido = true;
+
+        Float ventaConDescuento = 9000F;
+        Float ventaSinDescuento = 10000F;
+
+        // act - assert
+
+        assertEquals(ventaConDescuento,servicioCrearVenta.aplicarOfertaFinDeSemana(unidadVenta,precioArticulo,DiaEntreSemanaInvalido));
+        assertEquals(ventaSinDescuento,servicioCrearVenta.aplicarOfertaFinDeSemana(unidadVenta,precioArticulo,DiaEntreSemanaValido));
+
     }
 
 

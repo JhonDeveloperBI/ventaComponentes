@@ -21,13 +21,15 @@ public class ServicioCrearVenta {
     private static final String NO_HAY_INVENTARIO_ARTICULO = "No hay inventario del articulo";
 
     private static final String HORA_INICIO_OFERTA = "17:00:00.000";
-    private static final String HORA_FINAL_OFERTA = "10:00:00.000";
+    private static final String HORA_FINAL_OFERTA = "22:00:00.000";
 
     private static final String DESCRIPCION_CON_OFERTA = "venta con descuento";
     private static final String DESCRIPCION_SIN_OFERTA = "venta sin descuento";
 
     private static final Float PRECIO_MAXIMA_OFERTA_ARTICULO = 50000F;
     private static final Long UNIDAD_MAXIMO_ARTICULO_OFERTA = 2L;
+    private static final Long UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA = 10L;
+
 
     private static final Long PORCENTAJE_OFERTA_ARTICULO_SEMANA = 30L;
     private static final Long PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA = 10L;
@@ -65,13 +67,18 @@ public class ServicioCrearVenta {
 
         Float precioArticulo = articulo.getPrecio();
         Boolean cumplePrecio = precioArticuloOferta(precioArticulo);
-        Boolean diaOferta = validarDiasOferta(fechaVenta);
+        Boolean esDiaEntreSemana = validarDiasEntreSemana(fechaVenta);
 
-        venta.setDetalleVentaArticulo(aplicarOferta(unidadVenta, time, horaInicialOferta,
-                horaFinalOferta) && cumplePrecio && diaOferta ? DESCRIPCION_CON_OFERTA : DESCRIPCION_SIN_OFERTA);
+        if( esDiaEntreSemana ) {
+            venta.setDetalleVentaArticulo(aplicarOferta(unidadVenta, time, horaInicialOferta,
+                    horaFinalOferta) && cumplePrecio && esDiaEntreSemana ? DESCRIPCION_CON_OFERTA : DESCRIPCION_SIN_OFERTA);
 
-        venta.setTotalVenta(reglaEstaEnRangoOferta(unidadVenta, time, horaInicialOferta,
-                horaFinalOferta, precioArticulo, cumplePrecio, diaOferta));
+            venta.setTotalVenta(reglaEstaEnRangoOferta(unidadVenta, time, horaInicialOferta,
+                    horaFinalOferta, precioArticulo, cumplePrecio, esDiaEntreSemana));
+        }else {
+            venta.setDetalleVentaArticulo(DESCRIPCION_CON_OFERTA);
+            venta.setTotalVenta(aplicarOfertaFinDeSemana(unidadVenta, precioArticulo, esDiaEntreSemana));
+        }
 
         articulo.setUnidades(totalArticulo);
         servicioActualizarArticulo.ejecutar(articulo);
@@ -99,7 +106,7 @@ public class ServicioCrearVenta {
         }
     }
 
-    public boolean validarDiasOferta(LocalDateTime fechaVenta) {
+    public boolean validarDiasEntreSemana(LocalDateTime fechaVenta) {
         return (!(fechaVenta.getDayOfWeek() == DayOfWeek.SATURDAY || fechaVenta.getDayOfWeek() == DayOfWeek.SUNDAY));
     }
 
@@ -109,6 +116,16 @@ public class ServicioCrearVenta {
 
     public boolean aplicarOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta, LocalTime horaFinalOferta) {
         return ((unidadVenta>UNIDAD_MAXIMO_ARTICULO_OFERTA) && (horaInicialOferta.isBefore(time)) && (time.isAfter(horaFinalOferta)));
+    }
+
+    public float aplicarOfertaFinDeSemana(Long unidadVenta, Float precioArticulo, Boolean esDiaEntreSemana){
+        Float totalVenta = unidadVenta * precioArticulo;
+
+        if(  unidadVenta >= UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA && !esDiaEntreSemana ) {
+            return totalVenta - (totalVenta * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100;
+        }else{
+            return totalVenta;
+        }
     }
 
     private float reglaEstaEnRangoOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta,
