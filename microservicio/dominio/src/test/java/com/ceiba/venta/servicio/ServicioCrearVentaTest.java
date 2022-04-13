@@ -141,7 +141,7 @@ public class ServicioCrearVentaTest {
         Boolean DiaEntreSemanaInvalido = false;
         Float ventaConDescuento = 9000F;
         // act - assert
-        assertEquals(ventaConDescuento,servicioCrearVenta.aplicarOfertaFinDeSemana(unidadVenta,precioArticulo,DiaEntreSemanaInvalido));
+        assertEquals(ventaConDescuento,servicioCrearVenta.aplicarOfertaFinDeSemana(unidadVenta,10L,precioArticulo,DiaEntreSemanaInvalido));
 
     }
 
@@ -156,7 +156,7 @@ public class ServicioCrearVentaTest {
         Float ventaSinDescuento = 10000F;
         // act - assert
 
-        assertEquals(10000F,ventaSinDescuento,servicioCrearVenta.aplicarOfertaFinDeSemana(unidadVentaInvalida,precioArticulo,DiaEntreSemanaValido));
+        assertEquals(10000F,ventaSinDescuento,servicioCrearVenta.aplicarOfertaFinDeSemana(unidadVentaInvalida,2L,precioArticulo,DiaEntreSemanaValido));
 
     }
 
@@ -189,12 +189,12 @@ public class ServicioCrearVentaTest {
         Mockito.when(daoUsuario.existePorId(1L)).thenReturn(true);
         Mockito.when(daoArticulo.existePorId(1L)).thenReturn(true);
         Articulo articulo = new ArticuloTestDataBuilder().conUnidades(10L).build();
-        LocalDateTime fechaVenta = LocalDateTime.now();
+        LocalDateTime fechaSabado =LocalDateTime.parse("2022-02-19T11:25");
 
         Mockito.when(repositorioVenta.crear(venta)).thenReturn(1L);
         ServicioCrearVenta servicioCrearVenta =  spy(new ServicioCrearVenta(repositorioVenta,  servicioActualizarArticulo, daoArticulo, daoUsuario));
         Mockito.when(daoArticulo.obtenerArticuloPorId(1L)).thenReturn(articulo);
-        Mockito.when(servicioCrearVenta.validarDiasEntreSemana( fechaVenta )).thenReturn(false);
+        Mockito.when(servicioCrearVenta.obtenerFecha(  )).thenReturn(fechaSabado);
         // act
         Long idVenta = servicioCrearVenta.ejecutar(venta);
         //- assert

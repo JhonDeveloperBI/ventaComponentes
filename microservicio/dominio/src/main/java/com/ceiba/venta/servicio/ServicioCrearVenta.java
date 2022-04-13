@@ -59,7 +59,7 @@ public class ServicioCrearVenta {
         Long totalArticulo = unidadArticulo - unidadVenta;
         validarInventarioArticulo(totalArticulo);
 
-        LocalDateTime fechaVenta = LocalDateTime.now();
+        LocalDateTime fechaVenta = obtenerFecha();
 
         LocalTime time = fechaVenta.toLocalTime();
         LocalTime horaInicialOferta = LocalTime.parse(HORA_INICIO_OFERTA);
@@ -71,13 +71,13 @@ public class ServicioCrearVenta {
 
         if( esDiaEntreSemana ) {
             venta.setDetalleVentaArticulo(aplicarOferta(unidadVenta, time, horaInicialOferta,
-                    horaFinalOferta) && cumplePrecio && esDiaEntreSemana ? DESCRIPCION_CON_OFERTA : DESCRIPCION_SIN_OFERTA);
+                    horaFinalOferta) && cumplePrecio ? DESCRIPCION_CON_OFERTA : DESCRIPCION_SIN_OFERTA);
 
             venta.setTotalVenta(reglaEstaEnRangoOferta(unidadVenta, time, horaInicialOferta,
                     horaFinalOferta, precioArticulo, cumplePrecio, true));
         }else {
             venta.setDetalleVentaArticulo(DESCRIPCION_CON_OFERTA);
-            venta.setTotalVenta(aplicarOfertaFinDeSemana(unidadVenta, precioArticulo, false));
+            venta.setTotalVenta(aplicarOfertaFinDeSemana(unidadVenta, UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA, precioArticulo, false));
         }
 
         articulo.setUnidades(totalArticulo);
@@ -118,10 +118,10 @@ public class ServicioCrearVenta {
         return ((unidadVenta>UNIDAD_MAXIMO_ARTICULO_OFERTA) && (horaInicialOferta.isBefore(time)) && (time.isAfter(horaFinalOferta)));
     }
 
-    public float aplicarOfertaFinDeSemana(Long unidadVenta, Float precioArticulo, Boolean esDiaEntreSemana){
+    public float aplicarOfertaFinDeSemana(Long unidadVenta,Long unidadMaximaOferta, Float precioArticulo, Boolean esDiaEntreSemana){
         Float totalVenta = unidadVenta * precioArticulo;
 
-        if(  unidadVenta >= UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA && !esDiaEntreSemana ) {
+        if(  unidadVenta >= unidadMaximaOferta && !esDiaEntreSemana ) {
             return totalVenta - (totalVenta * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100;
         }else{
             return totalVenta;
@@ -139,6 +139,10 @@ public class ServicioCrearVenta {
 
     public Articulo obtenerArticuloPorId(Long idArticulo) {
         return this.daoArticulo.obtenerArticuloPorId(idArticulo);
+    }
+
+    public LocalDateTime obtenerFecha(){
+        return LocalDateTime.now();
     }
 
 
