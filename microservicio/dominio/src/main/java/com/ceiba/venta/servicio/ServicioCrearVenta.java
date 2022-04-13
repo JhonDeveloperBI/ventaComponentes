@@ -74,10 +74,10 @@ public class ServicioCrearVenta {
                     horaFinalOferta) && cumplePrecio && esDiaEntreSemana ? DESCRIPCION_CON_OFERTA : DESCRIPCION_SIN_OFERTA);
 
             venta.setTotalVenta(reglaEstaEnRangoOferta(unidadVenta, time, horaInicialOferta,
-                    horaFinalOferta, precioArticulo, cumplePrecio, esDiaEntreSemana));
+                    horaFinalOferta, precioArticulo, cumplePrecio, true));
         }else {
             venta.setDetalleVentaArticulo(DESCRIPCION_CON_OFERTA);
-            venta.setTotalVenta(aplicarOfertaFinDeSemana(unidadVenta, precioArticulo, esDiaEntreSemana));
+            venta.setTotalVenta(aplicarOfertaFinDeSemana(unidadVenta, precioArticulo, false));
         }
 
         articulo.setUnidades(totalArticulo);
@@ -128,7 +128,7 @@ public class ServicioCrearVenta {
         }
     }
 
-    private float reglaEstaEnRangoOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta,
+    public float reglaEstaEnRangoOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta,
                                          LocalTime horaFinalOferta, Float precio, boolean cumplePrecio, boolean diaOferta){
 
         if(aplicarOferta(unidadVenta, time, horaInicialOferta, horaFinalOferta) && cumplePrecio && diaOferta) {
