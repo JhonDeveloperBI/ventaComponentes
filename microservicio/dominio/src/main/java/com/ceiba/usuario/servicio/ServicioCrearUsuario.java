@@ -4,6 +4,8 @@ import com.ceiba.usuario.modelo.entidad.Usuario;
 import com.ceiba.usuario.puerto.repositorio.RepositorioUsuario;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
 
+import java.time.LocalDateTime;
+
 
 public class ServicioCrearUsuario {
 

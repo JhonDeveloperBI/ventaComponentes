@@ -6,7 +6,7 @@ jasypt:
 server:
    port: 8083
    servlet:
-      context-path: /
+      context-path: /ventacomponentes
       session:
          timeout: 21600s
 

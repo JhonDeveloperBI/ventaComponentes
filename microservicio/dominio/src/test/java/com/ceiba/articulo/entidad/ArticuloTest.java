@@ -3,6 +3,7 @@ package com.ceiba.articulo.entidad;
 import com.ceiba.BasePrueba;
 import com.ceiba.articulo.modelo.entidad.Articulo;
 import com.ceiba.articulo.servicio.testdatabuilder.ArticuloTestDataBuilder;
+import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,15 @@ public class ArticuloTest {
                     articuloTestDataBuilder.build();
                 },
                 ExcepcionValorObligatorio.class, "Se debe ingresar el precio del articulo");
+    }
+
+
+    @Test
+    @DisplayName("Deberia lanzar una exepcion cuando se valide inventario del articulo")
+    void deberiaLanzarUnaExepcionCuandoSeValideInventarioDelArticulo() {
+        Articulo articulo = new ArticuloTestDataBuilder().conId(1L).conNombreArticulo("diodo led").conUnidades(10L).conPrecio(150F).build();
+        // act - assert
+        BasePrueba.assertThrows(() -> articulo.validarInventarioArticulo(-1L), ExcepcionValorInvalido.class,"No hay inventario del articulo");
     }
 
 }

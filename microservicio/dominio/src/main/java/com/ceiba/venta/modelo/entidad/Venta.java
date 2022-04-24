@@ -3,7 +3,9 @@ package com.ceiba.venta.modelo.entidad;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
 
@@ -14,10 +16,12 @@ public class Venta {
     private static final String SE_DEBE_INGRESAR_EL_ID_ARTICULO = "Se debe ingresar el id del artículo a comprar";
     private static final String SE_DEBE_INGRESAR_EL_ID_DEL_USUARIO = "Se debe ingresar el id del usuario";
     private static final String SE_DEBE_INGRESAR_LA_CANTIDAD_DE_ARTICULOS = "Se debe ingresar la cantidad de artículos a comprar";
-    private static final String SE_DEBE_INGRESAR_EL_PRECIO_DE_UNIDAD_DEL_ARTICULO = "Se debe ingresar el precio unidad del artículo";
-    private static final String SE_DEBE_INGRESAR_EL_TOTAL_DE_VENTA = "Se debe ingresar el total de venta del artículo";
-    private static final String SE_DEBE_INGRESAR_EL_DETALLE_DE_VENTA  = "Se debe ingresar el detalle de venta del artículo";
-    private static final String SE_DEBE_INGRESAR_LA_FECHA_DE_VENTA  = "Se debe ingresar la fecha de venta del artículo";
+    private static final Float PRECIO_MAXIMA_OFERTA_ARTICULO = 50000F;
+    private static final Long UNIDAD_MAXIMO_ARTICULO_OFERTA = 2L;
+    private static final Long PORCENTAJE_OFERTA_ARTICULO_SEMANA = 30L;
+    private static final Long PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA = 10L;
+    private static final String DESCRIPCION_CON_OFERTA = "venta con descuento";
+    private static final String DESCRIPCION_SIN_OFERTA = "venta sin descuento";
 
     private Long id;
     private Long idArticulo;
@@ -32,13 +36,6 @@ public class Venta {
         validarObligatorio(idArticulo, SE_DEBE_INGRESAR_EL_ID_ARTICULO);
         validarObligatorio(idUsuario, SE_DEBE_INGRESAR_EL_ID_DEL_USUARIO);
         validarObligatorio(unidadVenta, SE_DEBE_INGRESAR_LA_CANTIDAD_DE_ARTICULOS);
-        validarObligatorio(precioUnidad, SE_DEBE_INGRESAR_EL_PRECIO_DE_UNIDAD_DEL_ARTICULO);
-        validarObligatorio(totalVenta, SE_DEBE_INGRESAR_EL_TOTAL_DE_VENTA);
-        validarObligatorio(detalleVentaArticulo, SE_DEBE_INGRESAR_EL_DETALLE_DE_VENTA);
-        validarObligatorio(fechaVentaArticulo, SE_DEBE_INGRESAR_LA_FECHA_DE_VENTA);
-
-
-
 
 
         this.id = id;
@@ -49,5 +46,38 @@ public class Venta {
         this.totalVenta = totalVenta;
         this.detalleVentaArticulo = detalleVentaArticulo;
         this.fechaVentaArticulo = fechaVentaArticulo;
+    }
+
+    public boolean precioArticuloOferta(Float precio) {
+        return precio>PRECIO_MAXIMA_OFERTA_ARTICULO;
+    }
+
+    public boolean validarDiasEntreSemana(LocalDateTime fechaVenta) {
+        return (!(fechaVenta.getDayOfWeek() == DayOfWeek.SATURDAY || fechaVenta.getDayOfWeek() == DayOfWeek.SUNDAY));
+    }
+
+    public boolean aplicarOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta, LocalTime horaFinalOferta) {
+        return ((unidadVenta>UNIDAD_MAXIMO_ARTICULO_OFERTA) && (horaInicialOferta.isBefore(time)) && (time.isAfter(horaFinalOferta)));
+    }
+
+    public float reglaEstaEnRangoOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta,
+                                        LocalTime horaFinalOferta, Float precio, boolean cumplePrecio, boolean diaOferta){
+
+        if(aplicarOferta(unidadVenta, time, horaInicialOferta, horaFinalOferta) && cumplePrecio && diaOferta) {
+            return ((precio*PORCENTAJE_OFERTA_ARTICULO_SEMANA)/100)*unidadVenta;
+        }
+        return  precio * unidadVenta;
+    }
+
+    public float aplicarOfertaFinDeSemana(Long unidadVenta,Long unidadMaximaOferta, Float precioArticulo, Boolean esDiaEntreSemana){
+        Float totalVenta = unidadVenta * precioArticulo;
+
+        if(  unidadVenta >= unidadMaximaOferta && !esDiaEntreSemana ) {
+            this.setDetalleVentaArticulo(DESCRIPCION_CON_OFERTA);
+            return totalVenta - (totalVenta * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100;
+        }else{
+            this.setDetalleVentaArticulo(DESCRIPCION_SIN_OFERTA);
+            return totalVenta;
+        }
     }
 }

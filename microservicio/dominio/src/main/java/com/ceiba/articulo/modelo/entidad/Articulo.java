@@ -1,5 +1,6 @@
 package com.ceiba.articulo.modelo.entidad;
 
+import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class Articulo {
     private static final String SE_DEBE_INGRESAR_EL_NOMBRE_DEL_ARTICULO = "Se debe ingresar el nombre del articulo";
     private static final String SE_DEBE_INGRESAR_LA_CANTIDAD = "Se debe ingresar la cantidad de articulos";
     private static final String SE_DEBE_INGRESAR_EL_PRECIO = "Se debe ingresar el precio del articulo";
+    private static final String NO_HAY_INVENTARIO_ARTICULO = "No hay inventario del articulo";
 
 
     public Articulo(Long id,String nombreArticulo, Long unidades,Float precio) {
@@ -29,5 +31,10 @@ public class Articulo {
         this.precio = precio;
     }
 
+    public void validarInventarioArticulo(Long totalArticulo) {
+        if(totalArticulo<=0) {
+            throw new ExcepcionValorInvalido(NO_HAY_INVENTARIO_ARTICULO);
+        }
+    }
 
 }
