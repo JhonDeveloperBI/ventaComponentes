@@ -1,6 +1,8 @@
 package com.ceiba.usuario.comando.manejador;
 
+import com.ceiba.ComandoRespuesta;
 import com.ceiba.manejador.ManejadorComando;
+import com.ceiba.manejador.ManejadorComandoRespuesta;
 import com.ceiba.usuario.modelo.entidad.Usuario;
 import com.ceiba.usuario.servicio.ServicioActualizarUsuario;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,7 @@ import com.ceiba.usuario.comando.ComandoUsuario;
 import com.ceiba.usuario.comando.fabrica.FabricaUsuario;
 
 @Component
-public class ManejadorActualizarUsuario implements ManejadorComando<ComandoUsuario> {
+public class ManejadorActualizarUsuario implements ManejadorComandoRespuesta<ComandoUsuario, ComandoRespuesta<Long>> {
 
     private final FabricaUsuario fabricaUsuario;
     private final ServicioActualizarUsuario servicioActualizarUsuario;
@@ -19,8 +21,9 @@ public class ManejadorActualizarUsuario implements ManejadorComando<ComandoUsuar
         this.servicioActualizarUsuario = servicioActualizarUsuario;
     }
 
-    public void ejecutar(ComandoUsuario comandoUsuario) {
+    public ComandoRespuesta<Long> ejecutar(ComandoUsuario comandoUsuario) {
         Usuario usuario = this.fabricaUsuario.crear(comandoUsuario);
-        this.servicioActualizarUsuario.ejecutar(usuario);
+        return new ComandoRespuesta<>(this.servicioActualizarUsuario.ejecutar(usuario).longValue());
     }
+
 }

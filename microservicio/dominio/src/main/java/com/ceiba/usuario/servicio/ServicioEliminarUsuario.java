@@ -10,7 +10,8 @@ public class ServicioEliminarUsuario {
         this.repositorioUsuario = repositorioUsuario;
     }
 
-    public void ejecutar(Long id) {
+    public Long ejecutar(Long id) {
         this.repositorioUsuario.eliminar(id);
+        return id;
     }
 }

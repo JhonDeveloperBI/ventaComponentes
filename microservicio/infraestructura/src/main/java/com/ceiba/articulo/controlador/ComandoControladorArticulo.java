@@ -34,9 +34,9 @@ public class ComandoControladorArticulo {
 
     @PutMapping(value="/{id}")
     @ApiOperation("Actualizar articulo")
-    public void actualizar(@RequestBody ComandoArticulo comandoArticulo,@PathVariable Long id) {
+    public ComandoRespuesta<Long> actualizar(@RequestBody ComandoArticulo comandoArticulo, @PathVariable Long id) {
         comandoArticulo.setId(id);
-        manejadorActualizarArticulo.ejecutar(comandoArticulo);
+        return manejadorActualizarArticulo.ejecutar(comandoArticulo);
     }
 
     @DeleteMapping(value="/{id}")

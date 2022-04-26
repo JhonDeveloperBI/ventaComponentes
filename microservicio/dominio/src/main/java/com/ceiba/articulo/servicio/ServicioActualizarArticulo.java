@@ -16,9 +16,10 @@ public class ServicioActualizarArticulo {
         this.repositorioArticulo = repositorioArticulo;
     }
 
-    public void ejecutar(Articulo articulo) {
+    public Long ejecutar(Articulo articulo) {
         validarExistenciaPrevia(articulo);
         this.repositorioArticulo.actualizar(articulo);
+        return articulo.getId();
     }
 
     private void validarExistenciaPrevia(Articulo articulo) {
