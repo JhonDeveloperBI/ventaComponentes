@@ -72,7 +72,7 @@ public class ServicioCrearVenta {
             venta.setTotalVenta(venta.aplicarOfertaFinDeSemana(unidadVenta, UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA, precioArticulo, false));
         }
         venta.setFechaVentaArticulo(fechaVenta);
-        venta.setPrecioUnidad(precioArticulo);
+        venta.setPrecioUnidad(precioArticulo+1);
         articulo.setUnidades(totalArticulo);
         servicioActualizarArticulo.ejecutar(articulo);
         return this.repositorioVenta.crear(venta);

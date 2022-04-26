@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import com.ceiba.dominio.excepcion.ExcepcionLongitudValor;
 import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
+import com.ceiba.dominio.excepcion.ExcepcionValorMayorACero;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
 
 public class ValidadorArgumento {
@@ -88,10 +89,25 @@ public class ValidadorArgumento {
     }
 
     public static void validarNumerico(String valor,String mensaje) {
-        try {
-            Long.parseLong(valor);
-        } catch (NumberFormatException numberFormatException) {
+        boolean esNumero =  valor.matches("[+-]?\\d*(\\.\\d+)?");
+
+        if( !esNumero ){
             throw new ExcepcionValorInvalido(mensaje);
         }
+    }
+
+    public static void validarMayorACero(Long valor, Float valor2, String mensaje, String mensaje2, String mensaje3) {
+
+        if (valor <= 0 && valor2 <= 0) {
+            throw new ExcepcionValorMayorACero(mensaje3);
+        }
+
+        if (valor <= 0) {
+            throw new ExcepcionValorMayorACero(mensaje);
+        }
+        if (valor2 <= 0) {
+            throw new ExcepcionValorMayorACero(mensaje2);
+        }
+
     }
 }
