@@ -22,6 +22,9 @@ public class Venta {
     private static final Long PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA = 10L;
     private static final String DESCRIPCION_CON_OFERTA = "venta con descuento";
     private static final String DESCRIPCION_SIN_OFERTA = "venta sin descuento";
+    private static final Long UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA = 10L;
+    private static final String HORA_INICIO_OFERTA = "17:00:00.000";
+    private static final String HORA_FINAL_OFERTA = "22:00:00.000";
 
     private Long id;
     private Long idArticulo;
@@ -31,6 +34,10 @@ public class Venta {
     private Float totalVenta;
     private String detalleVentaArticulo;
     private LocalDateTime fechaVentaArticulo;
+
+    public Venta(){
+
+    }
 
     public Venta(Long id, Long idArticulo, Long idUsuario, Long unidadVenta, Float precioUnidad, Float totalVenta, String detalleVentaArticulo, LocalDateTime fechaVentaArticulo) {
         validarObligatorio(idArticulo, SE_DEBE_INGRESAR_EL_ID_ARTICULO);
@@ -49,35 +56,63 @@ public class Venta {
     }
 
     public boolean precioArticuloOferta(Float precio) {
-        return precio>PRECIO_MAXIMA_OFERTA_ARTICULO;
+        return precio > PRECIO_MAXIMA_OFERTA_ARTICULO;
     }
 
     public boolean validarDiasEntreSemana(LocalDateTime fechaVenta) {
         return (!(fechaVenta.getDayOfWeek() == DayOfWeek.SATURDAY || fechaVenta.getDayOfWeek() == DayOfWeek.SUNDAY));
     }
 
-    public boolean aplicarOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta, LocalTime horaFinalOferta) {
-        return ((unidadVenta>UNIDAD_MAXIMO_ARTICULO_OFERTA) && (horaInicialOferta.isBefore(time)) && (time.isAfter(horaFinalOferta)));
+    public void calcularOferta( Float precioArticulo, boolean cumplePrecio){
+
+        LocalDateTime fechaVenta = obtenerFecha();
+        LocalTime time = fechaVenta.toLocalTime();
+
+        LocalTime horaInicialOferta = LocalTime.parse(HORA_INICIO_OFERTA);
+        LocalTime horaFinalOferta = LocalTime.parse(HORA_FINAL_OFERTA);
+
+        if(validarDiasEntreSemana(fechaVenta)){
+            reglaEstaEnRangoOferta( time, horaInicialOferta, horaFinalOferta, precioArticulo, cumplePrecio, true);
+        }else{
+            aplicarOfertaFinDeSemana( UNIDAD_MAXIMO_ARTICULO_OFERTA_FIN_DE_SEMANA, precioArticulo, false);
+        }
+
+        this.setFechaVentaArticulo(fechaVenta);
+        this.setPrecioUnidad(precioArticulo);
+
     }
 
-    public float reglaEstaEnRangoOferta(Long unidadVenta, LocalTime time, LocalTime horaInicialOferta,
+    public boolean aplicarOferta( LocalTime time, LocalTime horaInicialOferta, LocalTime horaFinalOferta,Boolean cumpleOferta) {
+      boolean resultadoAplicarOferta = ((this.unidadVenta > UNIDAD_MAXIMO_ARTICULO_OFERTA) && (horaInicialOferta.isBefore(time)) && (time.isAfter(horaFinalOferta))) && cumpleOferta;
+
+      this.setDetalleVentaArticulo( resultadoAplicarOferta? DESCRIPCION_CON_OFERTA : DESCRIPCION_SIN_OFERTA);
+
+      return resultadoAplicarOferta;
+    }
+
+    public void reglaEstaEnRangoOferta( LocalTime time, LocalTime horaInicialOferta,
                                         LocalTime horaFinalOferta, Float precio, boolean cumplePrecio, boolean diaOferta){
 
-        if(aplicarOferta(unidadVenta, time, horaInicialOferta, horaFinalOferta) && cumplePrecio && diaOferta) {
-            return ((precio*PORCENTAJE_OFERTA_ARTICULO_SEMANA)/100)*unidadVenta;
+        if(aplicarOferta( time, horaInicialOferta, horaFinalOferta,cumplePrecio)  && diaOferta) {
+            this.setTotalVenta( ((precio * PORCENTAJE_OFERTA_ARTICULO_SEMANA ) / 100) * this.unidadVenta );
+        }else {
+            this.setTotalVenta( precio * this.unidadVenta);
         }
-        return  precio * unidadVenta;
     }
 
-    public float aplicarOfertaFinDeSemana(Long unidadVenta,Long unidadMaximaOferta, Float precioArticulo, Boolean esDiaEntreSemana){
-        Float totalVenta = unidadVenta * precioArticulo;
+    public void aplicarOfertaFinDeSemana(Long unidadMaximaOferta, Float precioArticulo, Boolean esDiaEntreSemana){
+        Float totalVenta = this.unidadVenta * precioArticulo;
 
-        if(  unidadVenta >= unidadMaximaOferta && !esDiaEntreSemana ) {
+        if(  this.unidadVenta >= unidadMaximaOferta && !esDiaEntreSemana ) {
             this.setDetalleVentaArticulo(DESCRIPCION_CON_OFERTA);
-            return totalVenta - (totalVenta * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100;
+            this.setTotalVenta( totalVenta - (totalVenta * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100 );
         }else{
             this.setDetalleVentaArticulo(DESCRIPCION_SIN_OFERTA);
-            return totalVenta;
+            this.setTotalVenta( totalVenta );
         }
+    }
+
+    public LocalDateTime obtenerFecha(){
+        return LocalDateTime.now();
     }
 }

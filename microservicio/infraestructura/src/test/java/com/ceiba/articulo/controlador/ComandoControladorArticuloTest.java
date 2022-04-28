@@ -59,6 +59,21 @@ public class ComandoControladorArticuloTest {
     }
 
     @Test
+    @DisplayName("Deberia actualizar un articulo devolviendo el id del articulo")
+    void deberiaActualizarUnArticuloDevolviendoElIdDelArticulo() throws Exception{
+        // arrange
+        Long id = 1L;
+        ComandoArticulo articulo = new ComandoArticuloTestDataBuilder().build();
+        // act - assert
+        mocMvc.perform(put("/articulos/{id}",id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(articulo)))
+                .andExpect(content().json("{'valor': 1}"))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
     @DisplayName("Deberia eliminar un articulo")
     void deberiaEliminarUnArticulo() throws Exception {
         // arrange
@@ -67,6 +82,25 @@ public class ComandoControladorArticuloTest {
         mocMvc.perform(delete("/articulos/{id}",id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mocMvc.perform(get("/articulos")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+
+    @Test
+    @DisplayName("Deberia eliminar un articulo retornando el id del articulo")
+    void deberiaEliminarUnArticuloRetornandoElIdDelArticulo() throws Exception {
+        // arrange
+        Long id = 1L;
+        // act - assert
+        mocMvc.perform(delete("/articulos/{id}",id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{'valor': 1}"))
                 .andExpect(status().isOk());
 
         mocMvc.perform(get("/articulos")

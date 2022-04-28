@@ -58,6 +58,21 @@ class ComandoControladorUsuarioTest {
     }
 
     @Test
+    @DisplayName("Deberia actualizar un usuario devolviendo su id")
+    void deberiaActualizarUnUsuarioDevolviendoSuId() throws Exception{
+        // arrange
+        Long id = 1L;
+        ComandoUsuario usuario = new ComandoUsuarioTestDataBuilder().build();
+        // act - assert
+        mocMvc.perform(put("/usuarios/{id}",id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(usuario)))
+                .andExpect(content().json("{'valor': 1}"))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
     @DisplayName("Deberia eliminar un usuario")
     void deberiaEliminarUnUsuario() throws Exception {
         // arrange
@@ -70,6 +85,25 @@ class ComandoControladorUsuarioTest {
 
         mocMvc.perform(get("/usuarios")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+
+    @Test
+    @DisplayName("Deberia eliminar un usuario devolviendo su id")
+    void deberiaEliminarUnUsuarioDevolviendoSuId() throws Exception {
+        // arrange
+        Long id = 1L;
+        // act - assert
+        mocMvc.perform(delete("/usuarios/{id}",id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{'valor': 1}"))
+                .andExpect(status().isOk());
+
+        mocMvc.perform(get("/usuarios")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }

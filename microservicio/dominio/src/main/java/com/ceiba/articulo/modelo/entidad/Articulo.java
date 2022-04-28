@@ -20,7 +20,7 @@ public class Articulo {
     private static final String LA_CANTIDAD_DEBE_SER_UN_VALOR_NUMERICO = "La cantidad debe ser un valor numerico";
     private static final String EL_PRECIO_DEBE_SER_UN_VALOR_NUMERICO = "El precio debe ser un valor numerico";
 
-    private static final String LA_CANTIDAD_DEBE_SER_MAYOR_A_CERO = "La cantidad de articulos deber ser mayor a 0";
+    private static final String LA_CANTIDAD_DEBE_SER_MAYOR_A_CERO = "La cantidad de articulos debe ser mayor a 0";
     private static final String EL_PRECIO_DEBE_SER_MAYOR_A_CERO = "El precio debe ser mayor a 0";
     private static final String LA_CANTIDAD_DEBE_SER_MAYOR_A_CERO_Y_EL_PRECIO_DEBE_SER_MAYOR_A_CERO ="La cantidad de articulos debe ser mayor a 0 y el precio deber ser mayor a 0";
 
@@ -31,8 +31,6 @@ public class Articulo {
         validarObligatorio(nombreArticulo, SE_DEBE_INGRESAR_EL_NOMBRE_DEL_ARTICULO);
         validarObligatorio(unidades, SE_DEBE_INGRESAR_LA_CANTIDAD);
         validarObligatorio(precio, SE_DEBE_INGRESAR_EL_PRECIO);
-        validarNumerico(String.valueOf(unidades), LA_CANTIDAD_DEBE_SER_UN_VALOR_NUMERICO);
-        validarNumerico(String.valueOf(precio), EL_PRECIO_DEBE_SER_UN_VALOR_NUMERICO);
         validarMayorACero(unidades, precio, LA_CANTIDAD_DEBE_SER_MAYOR_A_CERO, EL_PRECIO_DEBE_SER_MAYOR_A_CERO,
                 LA_CANTIDAD_DEBE_SER_MAYOR_A_CERO_Y_EL_PRECIO_DEBE_SER_MAYOR_A_CERO);
 
@@ -42,10 +40,12 @@ public class Articulo {
         this.precio = precio;
     }
 
-    public void validarInventarioArticulo(Long totalArticulo) {
-        if(totalArticulo<=0) {
+    public void validarInventarioArticulo(Long unidadArticulo, Long unidadVenta) {
+        Long totalArticulo = unidadArticulo -unidadVenta;
+        if(totalArticulo < 0) {
             throw new ExcepcionValorInvalido(NO_HAY_INVENTARIO_ARTICULO);
         }
+        this.setUnidades(totalArticulo);
     }
 
 }
