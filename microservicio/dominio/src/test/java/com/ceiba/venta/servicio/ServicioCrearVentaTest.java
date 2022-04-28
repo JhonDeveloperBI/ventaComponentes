@@ -128,6 +128,8 @@ public class ServicioCrearVentaTest {
         assertEquals(articulo.getPrecio(), ventaArgumentCaptor.getValue().getPrecioUnidad());
     }
 
+
+
     @Test
     @DisplayName("Deberia Crear la venta de manera correcta con descuento fin de semana")
     void deberiaCrearLaVentaDeManeraCorrectaConDescuentoFinDeSemana(){

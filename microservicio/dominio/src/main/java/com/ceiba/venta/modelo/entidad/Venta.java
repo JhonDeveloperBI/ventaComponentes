@@ -94,7 +94,8 @@ public class Venta {
                                         LocalTime horaFinalOferta, Float precio, boolean cumplePrecio, boolean diaOferta){
 
         if(aplicarOferta( time, horaInicialOferta, horaFinalOferta,cumplePrecio)  && diaOferta) {
-            this.setTotalVenta( ((precio * PORCENTAJE_OFERTA_ARTICULO_SEMANA ) / 100) * this.unidadVenta );
+            Float totalVentaArticulo = this.unidadVenta * precio;
+            this.setTotalVenta( totalVentaArticulo - (totalVentaArticulo * PORCENTAJE_OFERTA_ARTICULO_SEMANA) / 100 );
         }else {
             this.setTotalVenta( precio * this.unidadVenta);
         }

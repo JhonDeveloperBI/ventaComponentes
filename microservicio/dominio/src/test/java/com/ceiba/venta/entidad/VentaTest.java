@@ -146,7 +146,7 @@ public class VentaTest {
 
         venta.setUnidadVenta(4L);
         venta.reglaEstaEnRangoOferta( horaActualAplica, horaInicial, horaFinal, precio, cumplePrecio, cumpleDiaOferta);
-        assertEquals( 12000F, venta.getTotalVenta());
+        assertEquals( 28000F, venta.getTotalVenta());
 
         venta.setUnidadVenta(3L);
         venta.reglaEstaEnRangoOferta(horaActualNoAplica, horaInicial, horaFinal,precio,noCumplePrecio,cumpleDiaOferta);
@@ -154,7 +154,7 @@ public class VentaTest {
 
         venta.setUnidadVenta(3L);
         venta.reglaEstaEnRangoOferta(horaActualAplica, horaInicial, horaFinal,precio,cumplePrecio,cumpleDiaOferta);
-        assertEquals( 9000F, venta.getTotalVenta());
+        assertEquals( 21000F, venta.getTotalVenta());
 
         venta.setUnidadVenta(1L);
         venta.reglaEstaEnRangoOferta(horaActualNoAplica, horaInicial, horaFinal,precio,noCumplePrecio,noCumpleDiaOferta);
@@ -187,12 +187,12 @@ public class VentaTest {
 
         venta.setUnidadVenta(4L);
         venta.reglaEstaEnRangoOferta( horaActualAplica, horaInicial, horaFinal, precio, cumplePrecio, cumpleDiaOferta);
-        assertEquals( 60000F, venta.getTotalVenta());
+        assertEquals( 140000F, venta.getTotalVenta());
         assertEquals( "venta con descuento", venta.getDetalleVentaArticulo());
 
         venta.setUnidadVenta(3L);
         venta.reglaEstaEnRangoOferta(horaActualAplica, horaInicial, horaFinal,precio,cumplePrecio,cumpleDiaOferta);
-        assertEquals( 45000, venta.getTotalVenta());
+        assertEquals( 105000, venta.getTotalVenta());
         assertEquals( "venta con descuento", venta.getDetalleVentaArticulo());
 
     }
