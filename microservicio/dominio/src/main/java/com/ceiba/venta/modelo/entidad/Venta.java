@@ -101,14 +101,14 @@ public class Venta {
     }
 
     public void aplicarOfertaFinDeSemana(Long unidadMaximaOferta, Float precioArticulo, Boolean esDiaEntreSemana){
-        Float totalVenta = this.unidadVenta * precioArticulo;
+        Float totalVentaArticulo = this.unidadVenta * precioArticulo;
 
         if(  this.unidadVenta >= unidadMaximaOferta && !esDiaEntreSemana ) {
             this.setDetalleVentaArticulo(DESCRIPCION_CON_OFERTA);
-            this.setTotalVenta( totalVenta - (totalVenta * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100 );
+            this.setTotalVenta( totalVentaArticulo - (totalVentaArticulo * PORCENTAJE_OFERTA_ARTICULO_FIN_SEMANA) / 100 );
         }else{
             this.setDetalleVentaArticulo(DESCRIPCION_SIN_OFERTA);
-            this.setTotalVenta( totalVenta );
+            this.setTotalVenta( totalVentaArticulo );
         }
     }
 
